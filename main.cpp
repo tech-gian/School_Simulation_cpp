@@ -12,12 +12,18 @@
 int main(int argc, char* argv[]) {
 
     // Get parameters
-    int cclass = atoi(argv[1]);
+    int Cclass = atoi(argv[1]);
     int Lj = atoi(argv[2]);
     int Ls = atoi(argv[3]);
     int Lt = atoi(argv[4]);
     int N = atoi(argv[5]);
 
+
+    Student s("john", 0, 0, false);
+
+    School school(Lj, Ls, Lt, Cclass);
+
+    school.enter(s);
 
 
 

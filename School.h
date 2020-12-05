@@ -51,6 +51,9 @@ class Person {
     // Get tired
     int get_tired(void) const { return this->tired; }
 
+    // Set in_cls
+    void set_cls(void) { this->in_cls = true; }
+
 };
 
 
@@ -103,5 +106,189 @@ class Student: public Person {
 
 };
 
+
+
+// Room
+class Room {
+
+    // int Lj;
+    // int Ls;
+    // int Lt;
+
+    protected:
+    Student* student;
+
+    public:
+    // Constructor
+    Room() {}
+
+    // Destructor
+    virtual ~Room() {}
+
+    // Enter student in room
+    virtual void enter(Student& s) = 0;
+    // Exit student from room
+    // virtual Student& exit(void);
+
+    // Print
+    // virtual void print(void) const;
+
+};
+
+
+
+// Yard
+class Yard: public Room {
+
+
+    public:
+    // Constructor
+    Yard(): Room() {
+        cout << "A New Yard has been created!" << endl;
+    }
+
+    // Destructor
+    ~Yard();
+
+    // Enter student in yard
+    void enter(Student& s);
+    // Exit student from yard
+    Student& exit(void);
+
+};
+
+
+
+// Stairs
+class Stairs: public Room {
+
+
+    public:
+    // Constructor
+    Stairs(): Room() {
+        cout << "A New Stairs has been created!" << endl;
+    }
+
+    // Destructor
+    ~Stairs();
+
+    // Enter student in stairs
+    void enter(Student& s);
+    // Exit student from stairs
+    Student& exit(void);
+};
+
+
+
+// Corridor
+class Corridor: public Room {
+
+    public:
+    // Constructor
+    Corridor(): Room() {
+        cout << "A New Corridor has been created!" << endl;
+    }
+
+    // Destructor
+    ~Corridor();
+
+    // Enter student in corridor
+    void enter(Student& s);
+    // Exit student from corridor
+    Student& exit(void);
+
+};
+
+
+
+// Class
+class Class: public Room {
+
+    int no;
+
+    Teacher* teacher;
+    Student** students;
+    int size;
+
+    int Cclass;
+
+    public:
+    // Constructor
+    Class(int no, int Cclass): Room(), no(no), Cclass(Cclass) {
+        cout << "A New Class has been created!" << endl;
+        students = new Student*[Cclass];
+    }
+
+    // Destructor
+    ~Class();
+
+    // Enter student in class
+    void enter(Student& s);
+
+    // Print
+    void print(void) const;
+
+};
+
+
+// Floor
+class Floor: public Room {
+
+    int no;
+
+    Class* classes[6];
+    Corridor* corridor;
+
+    public:
+    // Constructor
+    Floor(int no, int Cclass): Room(), no(no) {
+        cout << "A New Floor has been created!" << endl;
+        for (int i=0 ; i<6 ; i++) classes[i] = new Class(i, Cclass);
+        corridor = new Corridor();
+    }
+
+    // Destructor
+    ~Floor();
+
+    // Enter student in floor
+    void enter(Student& s);
+
+    // Print
+    void print(void) const;
+
+};
+
+
+
+// School
+class School: public Room {
+
+    Floor* floors[3];
+    Yard* yard;
+    Stairs* stairs;
+
+    int Lj;
+    int Ls;
+    int Lt;
+
+    public:
+    // Constructor
+    School(int Lj, int Ls, int Lt, int Cclass): Lj(Lj), Ls(Ls), Lt(Lt) {
+        cout << "A New School has been created!" << endl;
+        yard = new Yard();
+        stairs = new Stairs();
+        for (int i=0 ; i<3 ; i++) floors[i] = new Floor(i, Cclass);
+    }
+
+    // Destructor
+    ~School();
+
+    // Enter student in school
+    void enter(Student& s);
+
+    // Print
+    void print(void) const;
+
+};
 
 
