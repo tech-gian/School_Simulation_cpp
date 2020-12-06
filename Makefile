@@ -7,7 +7,7 @@ INPUT   =
 CC = g++
 
 # Compile options
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -Werror -g
 
 # Files .o
 OBJS = main.o School.o
@@ -16,7 +16,7 @@ OBJS = main.o School.o
 EXEC = main
 
 # Arguments
-ARGS = 0 1 2 3 4
+ARGS = 5 1 2 3 4
 
 $(EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $(EXEC)

@@ -35,7 +35,7 @@ class Person {
     Person(string name, int nf, int nc): name(name), no_flo(nf), no_cls(nc), in_cls(false), tired(0) {}
 
     // Destructor
-    // ~Person();
+    virtual ~Person() {}    // CHECK that bitwise delete is fine
 
     // Print function
     virtual void print(void) const = 0;
@@ -76,7 +76,7 @@ class Teacher: public Person {
     ~Teacher();
 
     // Copy Constructor
-    Teacher(const Teacher& t): Person(t) {}
+    Teacher(const Teacher& t): Person(t) {} // CHECK that bitwise copy is fine
 
     // Teach teacher
     void teach(int N, int Lt);
@@ -97,13 +97,14 @@ class Student: public Person {
     // Constructor
     Student(string name, int nf, int nc, bool senior): Person(name, nf, nc), senior(senior) {
         cout << "A New Student has been created!" << endl;
+        // CHECK maybe you should make senior from nc (see lists post)
     }
 
     // Destructor
     ~Student();
 
     // Copy Constructor
-    Student(const Student& s): Person(s), senior(s.senior) {}
+    Student(const Student& s): Person(s), senior(s.senior) {}   // CHECK that bitwise copy is fine
 
     // Attend student
     void attend(int N, int Lj, int Ls);
@@ -242,6 +243,9 @@ class Class: public Room {
     // Operate class
     void operate(int N, int Lj, int Ls, int Lt) const;  // CHECK FOR const
 
+    // Get Cclass
+    int get_ccls(void) const { return this->Cclass; }
+
     // Print
     void print(void) const;
 
@@ -276,6 +280,9 @@ class Floor: public Room {
     // Operate floor
     void operate(int N, int Lj, int Ls, int Lt) const;  // CHECK FOR const
 
+    // Get Cclass
+    int get_ccls(void) const { return this->classes[0]->get_ccls(); }
+
     // Print
     void print(void) const;
 
@@ -296,7 +303,7 @@ class School: public Room {
 
     public:
     // Constructor
-    School(int Lj, int Ls, int Lt, int Cclass): Lj(Lj), Ls(Ls), Lt(Lt) {
+    School(int Lj, int Ls, int Lt, int Cclass): Room(), Lj(Lj), Ls(Ls), Lt(Lt) {
         cout << "A New School has been created!" << endl;
         yard = new Yard();
         stairs = new Stairs();
@@ -305,6 +312,13 @@ class School: public Room {
 
     // Destructor
     ~School();
+
+    // Copy constructor
+    School(School& s): Room(), Lj(s.Lj), Ls(s.Ls), Lt(s.Lt) {
+        yard = new Yard();
+        stairs = new Stairs();
+        for (int i=0 ; i<3 ; i++) floors[i] = new Floor(i, s.floors[0]->get_ccls());
+    }
 
     // Enter student in school
     void enter(Student& s);
@@ -319,5 +333,3 @@ class School: public Room {
     void print(void) const;
 
 };
-
-

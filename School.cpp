@@ -153,7 +153,7 @@ void Floor::operate(int N, int Lj, int Ls, int Lt) const {
 }
 
 void Floor::print(void) const {
-    cout << "Floor number " << no << "contains: " << endl;
+    cout << "Floor number " << no << " contains: " << endl;
 
     for (int i=0; i<6 ; i++) classes[i]->print();
 }
@@ -212,11 +212,10 @@ void Class::operate(int N, int Lj, int Ls, int Lt) const {
 }
 
 void Class::print(void) const {
-    cout << "People in class " << no << "are: " << endl;
+    cout << "People in class " << no << " are: " << endl;
 
     for (int i=0 ; i<size ; i++) students[i]->print();
+
+    // CHECK for typical
     teacher->print();
 }
-
-
-
