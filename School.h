@@ -23,6 +23,9 @@ class Person {
     string name;    // Person's name
     int no_flo;     // Floor's number
     int no_cls;     // Class's number
+
+    protected:
+
     bool in_cls;    // True if in class
     int tired;      // Counter for tiredness
 
@@ -52,7 +55,8 @@ class Person {
     int get_tired(void) const { return this->tired; }
 
     // Set in_cls
-    void set_cls(void) { this->in_cls = true; }
+    void set_cls(void) { this->in_cls = true; } // CHECK IT AGAIN (user should not have access)
+
 
 };
 
@@ -73,6 +77,9 @@ class Teacher: public Person {
 
     // Copy Constructor
     Teacher(const Teacher& t): Person(t) {}
+
+    // Teach teacher
+    void teach(int N, int Lt);
 
     // Print Teacher
     void print(void) const;
@@ -97,6 +104,9 @@ class Student: public Person {
 
     // Copy Constructor
     Student(const Student& s): Person(s), senior(s.senior) {}
+
+    // Attend student
+    void attend(int N, int Lj, int Ls);
 
     // Print Student
     void print(void) const { Person::print(); };
@@ -214,9 +224,10 @@ class Class: public Room {
 
     public:
     // Constructor
-    Class(int no, int Cclass): Room(), no(no), Cclass(Cclass) {
+    Class(int no, int Cclass): Room(), no(no), size(0), Cclass(Cclass) {
         cout << "A New Class has been created!" << endl;
         students = new Student*[Cclass];
+        teacher = NULL;     // CHECK IF need it
     }
 
     // Destructor
@@ -224,6 +235,12 @@ class Class: public Room {
 
     // Enter student in class
     void enter(Student& s);
+
+    // Place teacher in class
+    void place(Teacher& t);
+
+    // Operate class
+    void operate(int N, int Lj, int Ls, int Lt) const;  // CHECK FOR const
 
     // Print
     void print(void) const;
@@ -252,6 +269,12 @@ class Floor: public Room {
 
     // Enter student in floor
     void enter(Student& s);
+
+    // Place teacher in floor
+    void place(Teacher& t);
+
+    // Operate floor
+    void operate(int N, int Lj, int Ls, int Lt) const;  // CHECK FOR const
 
     // Print
     void print(void) const;
@@ -285,6 +308,12 @@ class School: public Room {
 
     // Enter student in school
     void enter(Student& s);
+
+    // Place teacher in school
+    void place(Teacher& t);
+
+    // Operate school
+    void operate(int N) const;  // CHECK FOR const
 
     // Print
     void print(void) const;

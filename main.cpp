@@ -25,6 +25,11 @@ int main(int argc, char* argv[]) {
 
     school.enter(s);
 
+    Teacher t("nick", 0, 0);
+
+    school.place(t);
+
+    school.operate(N);
 
 
     return 0;

@@ -7,7 +7,7 @@ INPUT   =
 CC = g++
 
 # Compile options
-CXXFLAGS = -Wall -Werror -g
+CXXFLAGS = -Wall -g
 
 # Files .o
 OBJS = main.o School.o
