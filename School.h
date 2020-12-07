@@ -25,23 +25,18 @@ class Person {
     int no_cls;     // Class's number
 
     protected:
-
     bool in_cls;    // True if in class
     int tired;      // Counter for tiredness
-
 
     public:
     // Constructor
     Person(string name, int nf, int nc): name(name), no_flo(nf), no_cls(nc), in_cls(false), tired(0) {}
 
     // Destructor
-    virtual ~Person() {}    // CHECK that bitwise delete is fine
+    virtual ~Person() {}
 
     // Print function
     virtual void print(void) const = 0;
-    //////////////////////////
-    // MAKE sure it's ABSTRACT
-    // CHECK logically copy constructors
 
     // Get name
     string get_name(void) const { return this->name; }
@@ -55,16 +50,13 @@ class Person {
     int get_tired(void) const { return this->tired; }
 
     // Set in_cls
-    void set_cls(void) { this->in_cls = true; } // CHECK IT AGAIN (user should not have access)
-
-
+    void set_cls(void) { this->in_cls = true; }
 };
 
 
 
 // Teacher
 class Teacher: public Person {
-
 
     public:
     // Constructor
@@ -76,15 +68,13 @@ class Teacher: public Person {
     ~Teacher();
 
     // Copy Constructor
-    Teacher(const Teacher& t): Person(t) {} // CHECK that bitwise copy is fine
+    Teacher(const Teacher& t): Person(t) {}
 
     // Teach teacher
     void teach(int N, int Lt);
 
     // Print Teacher
     void print(void) const;
-
-
 };
 
 
@@ -95,16 +85,20 @@ class Student: public Person {
 
     public:
     // Constructor
-    Student(string name, int nf, int nc, bool senior): Person(name, nf, nc), senior(senior) {
+    Student(string name, int nf, int nc): Person(name, nf, nc) {
         cout << "A New Student has been created!" << endl;
-        // CHECK maybe you should make senior from nc (see lists post)
+        if (nc >= 0 && nc <= 2) senior = false;
+        else senior = true;
     }
 
     // Destructor
     ~Student();
 
     // Copy Constructor
-    Student(const Student& s): Person(s), senior(s.senior) {}   // CHECK that bitwise copy is fine
+    Student(const Student& s): Person(s) {
+        if (s.senior == true) senior = true;
+        else senior = false;
+    }
 
     // Attend student
     void attend(int N, int Lj, int Ls);
@@ -114,17 +108,12 @@ class Student: public Person {
 
     // Get senior / junior
     bool get_senior(void) const { return this->senior; }
-
 };
 
 
 
 // Room
 class Room {
-
-    // int Lj;
-    // int Ls;
-    // int Lt;
 
     protected:
     Student* student;
@@ -138,19 +127,12 @@ class Room {
 
     // Enter student in room
     virtual void enter(Student& s) = 0;
-    // Exit student from room
-    // virtual Student& exit(void);
-
-    // Print
-    // virtual void print(void) const;
-
 };
 
 
 
 // Yard
 class Yard: public Room {
-
 
     public:
     // Constructor
@@ -165,14 +147,12 @@ class Yard: public Room {
     void enter(Student& s);
     // Exit student from yard
     Student& exit(void);
-
 };
 
 
 
 // Stairs
 class Stairs: public Room {
-
 
     public:
     // Constructor
@@ -207,14 +187,12 @@ class Corridor: public Room {
     void enter(Student& s);
     // Exit student from corridor
     Student& exit(void);
-
 };
 
 
 
 // Class
 class Class: public Room {
-
     int no;
 
     Teacher* teacher;
@@ -228,7 +206,7 @@ class Class: public Room {
     Class(int no, int Cclass): Room(), no(no), size(0), Cclass(Cclass) {
         cout << "A New Class has been created!" << endl;
         students = new Student*[Cclass];
-        teacher = NULL;     // CHECK IF need it
+        teacher = NULL;
     }
 
     // Destructor
@@ -241,20 +219,19 @@ class Class: public Room {
     void place(Teacher& t);
 
     // Operate class
-    void operate(int N, int Lj, int Ls, int Lt) const;  // CHECK FOR const
+    void operate(int N, int Lj, int Ls, int Lt) const;
 
     // Get Cclass
     int get_ccls(void) const { return this->Cclass; }
 
     // Print
     void print(void) const;
-
 };
+
 
 
 // Floor
 class Floor: public Room {
-
     int no;
 
     Class* classes[6];
@@ -278,21 +255,19 @@ class Floor: public Room {
     void place(Teacher& t);
 
     // Operate floor
-    void operate(int N, int Lj, int Ls, int Lt) const;  // CHECK FOR const
+    void operate(int N, int Lj, int Ls, int Lt) const;
 
     // Get Cclass
     int get_ccls(void) const { return this->classes[0]->get_ccls(); }
 
     // Print
     void print(void) const;
-
 };
 
 
 
 // School
 class School: public Room {
-
     Floor* floors[3];
     Yard* yard;
     Stairs* stairs;
@@ -327,9 +302,8 @@ class School: public Room {
     void place(Teacher& t);
 
     // Operate school
-    void operate(int N) const;  // CHECK FOR const
+    void operate(int N) const;
 
     // Print
     void print(void) const;
-
 };

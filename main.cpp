@@ -29,11 +29,9 @@ int main(int argc, char* argv[]) {
     int nf=0;
 
     for (int i=0 ; i<size_stud ; i++) {
-        bool senior = true;
-        if (i % 6 <= 2) senior = false;
         if (i % 6 == 0 && i != 0) nf++;
 
-        students[i] = new Student("Student_name" + to_string(i), nf%3, i%6, senior);
+        students[i] = new Student("Student_name" + to_string(i), nf%3, i%6);
     }
 
     int size_teacher = 3 * 6;

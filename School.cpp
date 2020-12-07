@@ -216,6 +216,5 @@ void Class::print(void) const {
 
     for (int i=0 ; i<size ; i++) students[i]->print();
 
-    // CHECK for typical
-    teacher->print();
+    if (teacher != NULL) teacher->print();
 }
