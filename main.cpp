@@ -37,7 +37,10 @@ int main(int argc, char* argv[]) {
         str1 << i;
         string temp = str1.str();
 
-        students[i] = new Student("Student_name" + temp, nf%3, i%6);
+        if (i%6 < 3) students[i] = new Junior("Junior_name" + temp, nf%3, i%6);
+        else students[i] = new Senior("Senior_name" + temp, nf%3, i%6);
+
+        // students[i] = new Student("Student_name" + temp, nf%3, i%6);
     }
 
     int size_teacher = 3 * 6;
@@ -72,7 +75,7 @@ int main(int argc, char* argv[]) {
                 break;
             }
 
-            school.enter(*students[i]);
+            school.enter(students[i]);
             i++;
         }
         else {
@@ -81,19 +84,19 @@ int main(int argc, char* argv[]) {
                 break;
             }
 
-            school.place(*teachers[j]);
+            school.place(teachers[j]);
             j++;
         }
     }
 
     if (stud) {
         for (int k=i ; k<size_stud ; k++) {
-            school.enter(*students[k]);
+            school.enter(students[k]);
         }
     }
     else {
         for (int k=j ; j<size_teacher ; k++) {
-            school.place(*teachers[k]);
+            school.place(teachers[k]);
         }
     }
 

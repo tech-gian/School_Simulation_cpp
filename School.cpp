@@ -39,13 +39,45 @@ Student::~Student() {
     cout << "A Student to be destroyed!" << endl;
 }
 
-void Student::attend(int N, int Lj, int Ls) {
-    if (this->get_senior()) {
-        this->tired += (N * Ls);
-    }
-    else {
-        this->tired += (N * Lj);
-    }
+// void Student::attend(int N, int Lj, int Ls) {
+//     if (this->get_senior()) {
+//         this->tired += (N * Ls);
+//     }
+//     else {
+//         this->tired += (N * Lj);
+//     }
+// }
+
+
+
+// Junior Functions
+
+Junior::~Junior() {
+    cout << "A Junior to be destroyed!" << endl;
+}
+
+void Junior::attend(int N, int L) {
+    this->tired += (N * L);
+}
+
+
+
+// Senior Functions
+
+Senior::~Senior() {
+    cout << "A Senior to be destroyed!" << endl;
+}
+
+void Senior::attend(int N, int L) {
+    this->tired += (N * L);
+}
+
+
+
+// Room Functions
+
+Room::~Room() {
+    cout << "A Room to be destroyed!" << endl;
 }
 
 
@@ -60,8 +92,8 @@ School::~School() {
     cout << "A School to be destroyed!" << endl;
 }
 
-void School::enter(Student& s) {
-    cout << s.get_name() << " enters school!" << endl;
+void School::enter(Student* s) {
+    cout << s->get_name() << " enters school!" << endl;
 
     yard->enter(s);
     s = yard->exit();
@@ -69,11 +101,11 @@ void School::enter(Student& s) {
     stairs->enter(s);
     s = stairs->exit();
 
-    floors[s.get_flo()]->enter(s);
+    floors[s->get_flo()]->enter(s);
 }
 
-void School::place(Teacher& t) {
-    this->floors[t.get_flo()]->place(t);
+void School::place(Teacher* t) {
+    this->floors[t->get_flo()]->place(t);
 }
 
 void School::operate(int N) const {
@@ -94,14 +126,14 @@ Yard::~Yard() {
     cout << "A Schoolyard to be destroyed!" << endl;
 }
 
-void Yard::enter(Student& s) {
-    this->student = &s;
-    cout << s.get_name() << " enters schoolyard!" << endl;
+void Yard::enter(Student* s) {
+    this->student = s;
+    cout << s->get_name() << " enters schoolyard!" << endl;
 }
 
-Student& Yard::exit(void) {
+Student* Yard::exit(void) {
     cout << this->student->get_name() << " exits schoolyard!" << endl;
-    return *student;
+    return student;
 }
 
 
@@ -112,14 +144,14 @@ Stairs::~Stairs() {
     cout << "A Stairs to be destroyed!" << endl;
 }
 
-void Stairs::enter(Student& s) {
-    this->student = &s;
-    cout << s.get_name() << " enters stairs!" << endl;
+void Stairs::enter(Student* s) {
+    this->student = s;
+    cout << s->get_name() << " enters stairs!" << endl;
 }
 
-Student& Stairs::exit(void) {
+Student* Stairs::exit(void) {
     cout << this->student->get_name() << " exits stairs!" << endl;
-    return *student;
+    return student;
 }
 
 
@@ -133,17 +165,17 @@ Floor::~Floor() {
     cout << "A Floor to be destroyed!" << endl;
 }
 
-void Floor::enter(Student& s) {
-    cout << s.get_name() << " enters floor!" << endl;
+void Floor::enter(Student* s) {
+    cout << s->get_name() << " enters floor!" << endl;
 
     corridor->enter(s);
     s = corridor->exit();
 
-    classes[s.get_cls()]->enter(s);
+    classes[s->get_cls()]->enter(s);
 }
 
-void Floor::place(Teacher& t) {
-    this->classes[t.get_cls()]->place(t);    
+void Floor::place(Teacher* t) {
+    this->classes[t->get_cls()]->place(t);    
 }
 
 void Floor::operate(int N, int Lj, int Ls, int Lt) const {
@@ -166,14 +198,14 @@ Corridor::~Corridor() {
     cout << "A Corridor to be destroyed!" << endl;
 }
 
-void Corridor::enter(Student& s) {
-    this->student = &s;
-    cout << s.get_name() << " enters corridor!" << endl;
+void Corridor::enter(Student* s) {
+    this->student = s;
+    cout << s->get_name() << " enters corridor!" << endl;
 }
 
-Student& Corridor::exit(void) {
+Student* Corridor::exit(void) {
     cout << this->student->get_name() << " exits corridor!" << endl;
-    return *student;
+    return student;
 }
 
 
@@ -186,29 +218,33 @@ Class::~Class() {
     delete[] this->students;
 }
 
-void Class::enter(Student& s) {
+void Class::enter(Student* s) {
     if (size < Cclass) {
-        s.set_cls();
-        this->students[size] = &s;
+        s->set_cls();
+        this->students[size] = s;
         this->size++;
     }
 
-    cout << s.get_name() << " enters classroom!" << endl;
+    cout << s->get_name() << " enters classroom!" << endl;
 }
 
-void Class::place(Teacher& t) {
-    this->teacher = &t;
+void Class::place(Teacher* t) {
+    this->teacher = t;
 
     // Change teacher's inside bool
-    t.get_in();
+    t->get_in();
 
-    cout << t.get_name() << " places in classroom!" << endl;
+    cout << t->get_name() << " places in classroom!" << endl;
 }
 
 void Class::operate(int N, int Lj, int Ls, int Lt) const {
     if (teacher != NULL) this->teacher->teach(N, Lt);
 
-    for (int i=0 ; i<size ; i++) students[i]->attend(N, Lj, Ls);
+    for (int i=0 ; i<size ; i++) {
+        if (students[i]->get_cls() < 3) students[i]->attend(N, Lj);
+        else students[i]->attend(N, Ls);
+        // CHECK that this is fine
+    }
 }
 
 void Class::print(void) const {
