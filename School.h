@@ -10,6 +10,9 @@
 #include <cstdlib>
 #include <ctime>
 
+// Include only for convert int to string
+#include <sstream>
+
 
 using namespace std;
 

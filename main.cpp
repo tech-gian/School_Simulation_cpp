@@ -31,7 +31,13 @@ int main(int argc, char* argv[]) {
     for (int i=0 ; i<size_stud ; i++) {
         if (i % 6 == 0 && i != 0) nf++;
 
-        students[i] = new Student("Student_name" + to_string(i), nf%3, i%6);
+        // Converting int to string
+        // Could use to_string, but not available in c++98
+        ostringstream str1;
+        str1 << i;
+        string temp = str1.str();
+
+        students[i] = new Student("Student_name" + temp, nf%3, i%6);
     }
 
     int size_teacher = 3 * 6;
@@ -41,7 +47,13 @@ int main(int argc, char* argv[]) {
     for (int i=0 ; i<size_teacher ; i++) {
         if (i % 6 == 0 && i != 0) nf++;
 
-        teachers[i] = new Teacher("Teacher_name" + to_string(i), nf, i%6);
+        // Converting int to string
+        // Could use to_string, but not available in c++98
+        ostringstream str1;
+        str1 << i;
+        string temp = str1.str();
+
+        teachers[i] = new Teacher("Teacher_name" + temp, nf, i%6);
     }
 
 
