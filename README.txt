@@ -1,3 +1,3 @@
 NOTES
 
-- find solutions for to_string, so you dont need to use c++11
+- Change student to junior/senior, different subclasses
