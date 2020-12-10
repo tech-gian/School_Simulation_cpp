@@ -39,15 +39,6 @@ Student::~Student() {
     cout << "A Student to be destroyed!" << endl;
 }
 
-// void Student::attend(int N, int Lj, int Ls) {
-//     if (this->get_senior()) {
-//         this->tired += (N * Ls);
-//     }
-//     else {
-//         this->tired += (N * Lj);
-//     }
-// }
-
 
 
 // Junior Functions
@@ -243,7 +234,6 @@ void Class::operate(int N, int Lj, int Ls, int Lt) const {
     for (int i=0 ; i<size ; i++) {
         if (students[i]->get_cls() < 3) students[i]->attend(N, Lj);
         else students[i]->attend(N, Ls);
-        // CHECK that this is fine
     }
 }
 

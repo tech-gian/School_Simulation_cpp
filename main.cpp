@@ -39,8 +39,6 @@ int main(int argc, char* argv[]) {
 
         if (i%6 < 3) students[i] = new Junior("Junior_name" + temp, nf%3, i%6);
         else students[i] = new Senior("Senior_name" + temp, nf%3, i%6);
-
-        // students[i] = new Student("Student_name" + temp, nf%3, i%6);
     }
 
     int size_teacher = 3 * 6;
@@ -95,7 +93,7 @@ int main(int argc, char* argv[]) {
         }
     }
     else {
-        for (int k=j ; j<size_teacher ; k++) {
+        for (int k=j ; k<size_teacher ; k++) {
             school.place(teachers[k]);
         }
     }

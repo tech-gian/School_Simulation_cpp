@@ -71,7 +71,9 @@ class Teacher: public Person {
     ~Teacher();
 
     // Copy Constructor
-    Teacher(const Teacher& t): Person(t) {}
+    Teacher(const Teacher& t): Person(t.get_name(), t.get_flo(), t.get_cls()) {
+        cout << "A New Teacher copied!" << endl;
+    }
 
     // Teach teacher
     void teach(int N, int Lt);
@@ -84,33 +86,21 @@ class Teacher: public Person {
 
 // Student
 class Student: public Person {
-    // bool senior;    // True if student is senior
 
     public:
     // Constructor
     Student(string name, int nf, int nc): Person(name, nf, nc) {
         cout << "A New Student has been created!" << endl;
-        // if (nc >= 0 && nc <= 2) senior = false;
-        // else senior = true;
     }
 
     // Destructor
     virtual ~Student();
 
-    // Copy Constructor
-    // Student(const Student& s): Person(s) {
-    //     if (s.senior == true) senior = true;
-    //     else senior = false;
-    // }
-
     // Attend student
-    virtual void attend(int N, int L) {}
+    virtual void attend(int N, int L) = 0;
 
     // Print Student
     virtual void print(void) const = 0;
-
-    // Get senior / junior
-    // bool get_senior(void) const { return this->senior; }
 };
 
 
@@ -128,7 +118,9 @@ class Junior: public Student {
     ~Junior();
 
     // Copy Constructor
-    Junior(const Junior& j): Student(j) {}  // CHECK bitwise copy is fine
+    Junior(const Junior& j): Student(j.get_name(), j.get_flo(), j.get_cls()) {
+        cout << "A Junior has been copied!" << endl;
+    }
 
     // Attend Junior
     void attend(int N, int L);
@@ -152,7 +144,9 @@ class Senior: public Student {
     ~Senior();
 
     // Copy Constructor
-    Senior(const Senior& s): Student(s) {}  // CHECK that bitwise copy is fine
+    Senior(const Senior& s): Student(s.get_name(), s.get_flo(), s.get_cls()) {
+        cout << "A New Senior has been copied!" << endl;
+    }
 
     // Attend Senior
     void attend(int N, int L);
@@ -167,11 +161,13 @@ class Senior: public Student {
 class Room {
 
     protected:
-    Student* student;
+    Student* student;       // Keep student when enters Room
 
     public:
     // Constructor
-    Room() {}
+    Room() {
+        cout << "A New Room has been created!" << endl;
+    }
 
     // Destructor
     virtual ~Room();
@@ -247,13 +243,13 @@ class Corridor: public Room {
 
 // Class
 class Class {
-    int no;
+    int no;                 // Number of Class
 
-    Teacher* teacher;
-    Student** students;
-    int size;
+    Teacher* teacher;       // Teacher of Class
+    Student** students;     // Students of Class
+    int size;               // How many students there are
 
-    int Cclass;
+    int Cclass;             // Capacity of Class
 
     public:
     // Constructor
@@ -286,10 +282,10 @@ class Class {
 
 // Floor
 class Floor {
-    int no;
+    int no;                 // Number of Floor
 
-    Class* classes[6];
-    Corridor* corridor;
+    Class* classes[6];      // Classes
+    Corridor* corridor;     // Corridor
 
     public:
     // Constructor
@@ -322,13 +318,13 @@ class Floor {
 
 // School
 class School {
-    Floor* floors[3];
-    Yard* yard;
-    Stairs* stairs;
+    Floor* floors[3];       // Floors
+    Yard* yard;             // Yard
+    Stairs* stairs;         // Stairs
 
-    int Lj;
-    int Ls;
-    int Lt;
+    int Lj;                 // Units for Junior
+    int Ls;                 // Units for Senior
+    int Lt;                 // Units for Teacher
 
     public:
     // Constructor
