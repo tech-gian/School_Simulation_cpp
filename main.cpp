@@ -63,9 +63,10 @@ int main(int argc, char* argv[]) {
 
     srand(time(NULL));
     int i=0, j=0;
-    bool stud;   // True if we stopped in student
+    bool stud;          // True if we stopped in student
 
-
+    // While all students or all teachers enter school,
+    // pick one random to get in
     while (true) {
         if (rand() % 2 == 0) {
             if (i >= size_stud) {
@@ -87,11 +88,13 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    // If there are students to enter school
     if (stud) {
         for (int k=i ; k<size_stud ; k++) {
             school.enter(students[k]);
         }
     }
+    // If there are teachers to place in school
     else {
         for (int k=j ; k<size_teacher ; k++) {
             school.place(teachers[k]);

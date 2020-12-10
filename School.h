@@ -33,10 +33,12 @@ class Person {
 
     public:
     // Constructor
-    Person(string name, int nf, int nc): name(name), no_flo(nf), no_cls(nc), in_cls(false), tired(0) {}
+    Person(string name, int nf, int nc): name(name), no_flo(nf), no_cls(nc), in_cls(false), tired(0) {
+        cout << "A New Person has been created!" << endl;
+    }
 
     // Destructor
-    virtual ~Person() {}
+    virtual ~Person();
 
     // Print function
     virtual void print(void) const = 0;

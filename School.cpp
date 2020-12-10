@@ -10,6 +10,10 @@
 
 // Person Functions
 
+Person::~Person() {
+    cout << "A Person to be destroyed!" << endl;
+}
+
 void Person::print(void) const {
     cout << this->name << " " << this->tired << endl;
 }
@@ -23,6 +27,7 @@ Teacher::~Teacher() {
 }
 
 void Teacher::teach(int N, int Lt) {
+    // Add hours * Lt
     this->tired += (N * Lt);
 }
 
@@ -48,6 +53,7 @@ Junior::~Junior() {
 }
 
 void Junior::attend(int N, int L) {
+    // Add hours * Lj
     this->tired += (N * L);
 }
 
@@ -60,6 +66,7 @@ Senior::~Senior() {
 }
 
 void Senior::attend(int N, int L) {
+    // Add hours * Ls
     this->tired += (N * L);
 }
 
@@ -76,6 +83,7 @@ Room::~Room() {
 // School Functions
 
 School::~School() {
+    // Delete memore allocated
     delete yard;
     delete stairs;
     for (int i=0 ; i<3 ; i++) delete floors[i];
@@ -86,6 +94,8 @@ School::~School() {
 void School::enter(Student* s) {
     cout << s->get_name() << " enters school!" << endl;
 
+    // When Student enters school,
+    // he goes all the way to his Class
     yard->enter(s);
     s = yard->exit();
 
@@ -96,10 +106,12 @@ void School::enter(Student* s) {
 }
 
 void School::place(Teacher* t) {
+    // Teacher is just placed in his Class
     this->floors[t->get_flo()]->place(t);
 }
 
 void School::operate(int N) const {
+    // Calling operate for each floor
     for (int i=0 ; i<3 ; i++) floors[i]->operate(N, Lj, Ls, Lt);
 }
 
@@ -118,11 +130,13 @@ Yard::~Yard() {
 }
 
 void Yard::enter(Student* s) {
+    // Temporary save Student
     this->student = s;
     cout << s->get_name() << " enters schoolyard!" << endl;
 }
 
 Student* Yard::exit(void) {
+    // Return Student
     cout << this->student->get_name() << " exits schoolyard!" << endl;
     return student;
 }
@@ -136,11 +150,13 @@ Stairs::~Stairs() {
 }
 
 void Stairs::enter(Student* s) {
+    // Temporary save Student
     this->student = s;
     cout << s->get_name() << " enters stairs!" << endl;
 }
 
 Student* Stairs::exit(void) {
+    // Return Student
     cout << this->student->get_name() << " exits stairs!" << endl;
     return student;
 }
@@ -159,6 +175,7 @@ Floor::~Floor() {
 void Floor::enter(Student* s) {
     cout << s->get_name() << " enters floor!" << endl;
 
+    // Continue the way of Student to Class
     corridor->enter(s);
     s = corridor->exit();
 
@@ -166,10 +183,12 @@ void Floor::enter(Student* s) {
 }
 
 void Floor::place(Teacher* t) {
+    // Teacher is placed
     this->classes[t->get_cls()]->place(t);    
 }
 
 void Floor::operate(int N, int Lj, int Ls, int Lt) const {
+    // Calling operate for each Class
     for (int i=0 ; i<6 ; i++) {
         classes[i]->operate(N, Lj, Ls, Lt);
     }
@@ -190,11 +209,13 @@ Corridor::~Corridor() {
 }
 
 void Corridor::enter(Student* s) {
+    // Temporary save Student
     this->student = s;
     cout << s->get_name() << " enters corridor!" << endl;
 }
 
 Student* Corridor::exit(void) {
+    // Return Student
     cout << this->student->get_name() << " exits corridor!" << endl;
     return student;
 }
@@ -211,6 +232,8 @@ Class::~Class() {
 
 void Class::enter(Student* s) {
     if (size < Cclass) {
+        // Add Student to students
+        // and set him in Class
         s->set_cls();
         this->students[size] = s;
         this->size++;
@@ -232,7 +255,9 @@ void Class::operate(int N, int Lj, int Ls, int Lt) const {
     if (teacher != NULL) this->teacher->teach(N, Lt);
 
     for (int i=0 ; i<size ; i++) {
+        // If Student is Junior
         if (students[i]->get_cls() < 3) students[i]->attend(N, Lj);
+        // If Student is Senior
         else students[i]->attend(N, Ls);
     }
 }
@@ -240,7 +265,9 @@ void Class::operate(int N, int Lj, int Ls, int Lt) const {
 void Class::print(void) const {
     cout << "People in class " << no << " are: " << endl;
 
+    // For all students in Class
     for (int i=0 ; i<size ; i++) students[i]->print();
 
+    // If teacher is in class
     if (teacher != NULL) teacher->print();
 }
