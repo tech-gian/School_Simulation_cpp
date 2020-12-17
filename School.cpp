@@ -222,18 +222,18 @@ Student* Corridor::exit(void) {
 
 
 
-// Class Functions
+// Classroom Functions
 
-Class::~Class() {
+Classroom::~Classroom() {
     cout << "A Class to be destroyed!" << endl;
 
     delete[] this->students;
 }
 
-void Class::enter(Student* s) {
+void Classroom::enter(Student* s) {
     if (size < Cclass) {
         // Add Student to students
-        // and set him in Class
+        // and set him in Classroom
         s->set_cls();
         this->students[size] = s;
         this->size++;
@@ -242,7 +242,7 @@ void Class::enter(Student* s) {
     cout << s->get_name() << " enters classroom!" << endl;
 }
 
-void Class::place(Teacher* t) {
+void Classroom::place(Teacher* t) {
     this->teacher = t;
 
     // Change teacher's inside bool
@@ -251,7 +251,7 @@ void Class::place(Teacher* t) {
     cout << t->get_name() << " places in classroom!" << endl;
 }
 
-void Class::operate(int N, int Lj, int Ls, int Lt) const {
+void Classroom::operate(int N, int Lj, int Ls, int Lt) const {
     if (teacher != NULL) this->teacher->teach(N, Lt);
 
     for (int i=0 ; i<size ; i++) {
@@ -262,12 +262,12 @@ void Class::operate(int N, int Lj, int Ls, int Lt) const {
     }
 }
 
-void Class::print(void) const {
+void Classroom::print(void) const {
     cout << "People in class " << no << " are: " << endl;
 
-    // For all students in Class
+    // For all students in Classroom
     for (int i=0 ; i<size ; i++) students[i]->print();
 
-    // If teacher is in class
+    // If teacher is in Classroom
     if (teacher != NULL) teacher->print();
 }

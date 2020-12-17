@@ -243,8 +243,8 @@ class Corridor: public Room {
 
 
 
-// Class
-class Class {
+// Classroom
+class Classroom {
     int no;                 // Number of Class
 
     Teacher* teacher;       // Teacher of Class
@@ -255,14 +255,14 @@ class Class {
 
     public:
     // Constructor
-    Class(int no, int Cclass): no(no), size(0), Cclass(Cclass) {
-        cout << "A New Class has been created!" << endl;
+    Classroom(int no, int Cclass): no(no), size(0), Cclass(Cclass) {
+        cout << "A New Classroom has been created!" << endl;
         students = new Student*[Cclass];
         teacher = NULL;
     }
 
     // Destructor
-    ~Class();
+    ~Classroom();
 
     // Enter student in class
     void enter(Student* s);
@@ -286,14 +286,14 @@ class Class {
 class Floor {
     int no;                 // Number of Floor
 
-    Class* classes[6];      // Classes
+    Classroom* classes[6];      // Classes
     Corridor* corridor;     // Corridor
 
     public:
     // Constructor
     Floor(int no, int Cclass): no(no) {
         cout << "A New Floor has been created!" << endl;
-        for (int i=0 ; i<6 ; i++) classes[i] = new Class(i, Cclass);
+        for (int i=0 ; i<6 ; i++) classes[i] = new Classroom(i, Cclass);
         corridor = new Corridor();
     }
 
