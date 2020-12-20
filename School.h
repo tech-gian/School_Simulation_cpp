@@ -264,13 +264,13 @@ class Classroom {
     // Destructor
     ~Classroom();
 
-    // Enter student in class
+    // Enter student in classroom
     void enter(Student* s);
 
-    // Place teacher in class
+    // Place teacher in classroom
     void place(Teacher* t);
 
-    // Operate class
+    // Operate classroom
     void operate(int N, int Lj, int Ls, int Lt) const;
 
     // Get Cclass
