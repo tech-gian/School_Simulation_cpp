@@ -116,7 +116,7 @@ void School::operate(int N) const {
 }
 
 void School::print(void) const {
-    cout << "School life consists of: " << endl;
+    cout << "School life consists of:" << endl;
 
     for (int i=0 ; i<3 ; i++) floors[i]->print();
 }
@@ -195,7 +195,7 @@ void Floor::operate(int N, int Lj, int Ls, int Lt) const {
 }
 
 void Floor::print(void) const {
-    cout << "Floor number " << no << " contains: " << endl;
+    cout << "Floor number " << no << " contains:" << endl;
 
     for (int i=0; i<6 ; i++) classes[i]->print();
 }
@@ -263,7 +263,7 @@ void Classroom::operate(int N, int Lj, int Ls, int Lt) const {
 }
 
 void Classroom::print(void) const {
-    cout << "People in class " << no << " are: " << endl;
+    cout << "People in class " << no << " are:" << endl;
 
     // For all students in Classroom
     for (int i=0 ; i<size ; i++) students[i]->print();
