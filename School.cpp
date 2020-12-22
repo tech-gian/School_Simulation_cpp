@@ -231,13 +231,13 @@ Classroom::~Classroom() {
 }
 
 void Classroom::enter(Student* s) {
-    if (size < Cclass) {
-        // Add Student to students
-        // and set him in Classroom
-        s->set_cls();
-        this->students[size] = s;
-        this->size++;
-    }
+    // If classroom is full
+    if (size >= Cclass) return;
+
+    // Add Student to students
+    // and set him in Classroom
+    s->set_cls();
+    this->students[size++] = s;
 
     cout << s->get_name() << " enters classroom!" << endl;
 }
